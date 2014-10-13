@@ -7,7 +7,7 @@ html, body {
 /*Given*/
 html, body, div, nav, p {
     /*Global font*/
-    font-size: 18pt;
+    font-size: 12pt;
     font-family: 'Lucida Sans', 'Verdana', sans-serif;
     
     /*Reset document-wide margins and paddings*/
@@ -17,7 +17,7 @@ html, body, div, nav, p {
 
 /*Req. 11*/
 #title, #location, #date {
-    padding:6pt;
+    padding:3pt;
     text-align:center;
     background-color:#CCCCCC;
     border-bottom:1px solid gray;
@@ -34,8 +34,8 @@ html, body, div, nav, p {
 #weather #info {
     width:200px;
     
-    margin-bottom:24pt;
-    margin-top:24px;
+    margin-bottom:12pt;
+    margin-top:12pt;
     
     margin-left:auto;
     margin-right:auto;
@@ -44,7 +44,7 @@ html, body, div, nav, p {
     
     border-radius:10px;
 
-    padding:16px;
+    padding:10px;
     
     text-align:center;
 }
@@ -75,7 +75,7 @@ html, body, div, nav, p {
     border: 1px solid gray;
     border-radius:6pt;
     background: linear-gradient(silver,gray);
-    padding: 12pt;
+    padding: 6pt;
     color:white;
     cursor:pointer;
     text-align:center;
@@ -93,7 +93,7 @@ html, body, div, nav, p {
     border-left: 3px solid white;
     border-right: 3px solid white;
     border-radius:6pt;
-    padding: 12px;
+    padding: 6px;
 }
 
 /*Req. 18*/
