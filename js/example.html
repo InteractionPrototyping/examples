@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 20%;
+            padding: 20px;
+            padding-top: 72px;
+            background: silver;
+            display: none;
+            z-index: 99;
+        }
+        .view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            overflow: none;
+            padding-top: 32px;
+            display: none;
+        }
+        #trigger {
+            position: fixed;
+            width: 64px;
+            height: 64px;
+            padding: 16px;
+            top: 4px;
+            left: 4px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        #trigger span,
+        #trigger span:before,
+        #trigger span:after {
+            position: absolute;
+            width: 32px;
+            height: 4px;
+            background: black;
+            border-radius: 2px;
+            box-shadow: 0px 0px 5px 2px silver;
+            font-size: 0;
+            content: '';
+        }
+        #trigger span:before {
+            transform: translate3D(0, -250%, 0);
+        }
+        #trigger span:after {
+            transform: translate3D(0, 250%, 0);
+        }
+        #trigger.open span {
+            /*Don't display central bar*/
+            background-color: transparent;
+            box-shadow: none;
+        }
+        #trigger.open span:before {
+            /*Rotate top bar*/
+            transform: translate3D(0, 0, 0) rotate3D(0, 0, 1, 45deg);
+        }
+        #trigger.open span:after {
+            /*Rotate bottom bar*/
+            transform: translate3D(0, 0, 0) rotate3D(0, 0, 1, -45deg);
+        }
+        img {
+            width: 140px;
+            height: 140px;
+        }
+    </style>
+    <script>
+        var comics = [
+            {
+                title: "Barrel - Part 3",
+                source: "http://imgs.xkcd.com/comics/barrel_whirlpool.jpg"
+            },
+            {
+                title: "Communication",
+                source: "http://imgs.xkcd.com/comics/communication.png"
+            },
+            {
+                title: "Detail",
+                source: "http://imgs.xkcd.com/comics/detail.png"
+            }
+        ];
+
+        var menuVisible = false;
+
+        function toggleMenu() {
+            menuVisible = !menuVisible;
+
+            if (menuVisible) {
+                document.getElementById("trigger").className = "open"
+                document.getElementById("menu").style.display = "block"
+            } else {
+                document.getElementById("trigger").className = ""
+                document.getElementById("menu").style.display = "none"
+            }
+        }
+
+        function showView(number) {
+            toggleMenu();
+            for (i = 1; i <= 2; i++) {
+                document.getElementById("view" + i).style.display = "none"
+            }
+            document.getElementById("view" + number).style.display = "block"
+        }
+
+        function printComics(comics) {
+            var allComicsHTML = "";
+            for (comic in comics) {
+                allComicsHTML += '<div class="col-md-3" onclick="printDetails(' + comic + ')">';
+                allComicsHTML += '<h2>' + comics[comic].title + '</h2>';
+                allComicsHTML += '<img class="img-thumbnail" src="' + comics[comic].source + '">';
+                allComicsHTML += '</div>';
+            }
+            document.getElementById("comics").innerHTML = allComicsHTML;
+        }
+
+        function printDetails(nr) {
+            alert("Dummy, we really should implement a zoom view. Then we could display image " + nr);
+        }
+
+        window.onload = function () {
+            printComics(comics);
+            document.getElementById("filter").onkeyup = function () {
+                var filter = document.getElementById("filter").value.toLowerCase();
+                console.log("Filtering: " + filter);
+                var filteredComics = [];
+                for (comic in comics) {
+                    if (comics[comic].title.toLowerCase().indexOf(filter) > -1) {
+                        filteredComics.push(comics[comic]);
+                    }
+                }
+                if (filter == "") {
+                    printComics(comics);
+                } else {
+                    printComics(filteredComics);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="trigger" onclick="toggleMenu();"><span>Menu</span>
+    </div>
+    <nav id="menu">
+        <button id="v1b" onclick="showView(1);" type="button" class="btn btn-default btn-block">One</button>
+        <button id="v2b" onclick="showView(2);" type="button" class="btn btn-default btn-block">More</button>
+    </nav>
+
+    <div class="view" id="view1">
+        <h1>One</h1>
+        <img src="http://imgs.xkcd.com/comics/background_screens.png">
+    </div>
+    <div class="view" id="view2">
+        <h1>More</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Filter" id="filter">
+        </div>
+        <div id="comics" class="row">
+
+        </div>
+    </div>
+</body>
+
+</html>

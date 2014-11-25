@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Media</title>
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- See: http://fortawesome.github.io/Font-Awesome/icons/ -->
+
+
+    <style>
+        body,
+        html {
+            /*1*/
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /*2*/
+            font-family: sans-serif;
+        }
+        nav {
+            /*3 - Style*/
+            background-color: #0194E1;
+            /*4 - Align */
+            /*float: left;*/
+            width: 250px;
+            height: 100%;
+            margin-right: 20px;
+            /*5 - Restyle */
+            background-image: url("online-music.png");
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-size: contain;
+            /*JS*/
+            position: absolute;
+            display: none;
+        }
+        /*6*/
+        nav h1 {
+            font-size: 550%;
+            color: black;
+            margin: 0;
+        }
+        nav ul {
+            font-size: 150%;
+            list-style-type: none;
+            padding: 5px;
+        }
+        /*7*/
+        #controls {
+            background-color: black;
+            color: white;
+            /*8 - Align*/
+            text-align: center;
+            /*9 - Positioning*/
+            position: absolute;
+            width: 300px;
+            height: 75px;
+            bottom: 0;
+            /*10 - Centering*/
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /*11 - Style Controls*/
+        #controls i {
+            margin: 0px 10px;
+        }
+        #controls p {
+            margin: 10px 0;
+            padding: 0;
+        }
+        /*12 - Items */
+        #albumlist div {
+            /*13 - Visibility */
+            background: linear-gradient(45deg, white, silver);
+            border-radius: 10px;
+            font-size: 10pt;
+            text-align: center;
+            padding-top: 20px;
+            /*14 - Arrange */
+            width: 250px;
+            height: 350px;
+            float: left;
+            margin: 10px;
+        }
+        #albumlist div.current {
+            border: 1px solid black;
+        }
+        /*15 - Optimize scrolling behavior */
+        .view {
+            height: 100%;
+            overflow: hidden;
+            overflow-y: scroll;
+            display: none;
+        }
+        /*JS: Menutrigger */
+        #menutrigger {
+            position: absolute;
+            padding: 16px;
+            top: 8px;
+            left: 8px;
+            text-shadow: 0 0 5px white;
+            z-index: 100;
+        }
+    </style>
+
+    <script>
+        /* JS 1: Create Movie Object */
+        var movie1 = {
+            title: "Shining",
+            image: "51JldpDOGGL._SL500_SY182_.jpg",
+            imdb: "http://www.imdb.com/title/tt0081505"
+        }
+        var movie2 = {
+            title: "Departed - Unter Feinden",
+            image: "511OL2GORpL._SL500_SY182_.jpg",
+            imdb: "http://www.imdb.com/title/tt0407887"
+        }
+        var movie3 = {
+            title: "Blow",
+            image: "512C08Cy5sL._SL500_SY182_.jpg",
+            imdb: "http://www.imdb.com/title/tt0221027"
+        }
+
+        /* JS 4: Create Movies Array */
+        var allMovies = [
+            {
+                title: "Shining",
+                image: "51JldpDOGGL._SL500_SY182_.jpg",
+                imdb: "http://www.imdb.com/title/tt0081505"
+            },
+            {
+                title: "Departed - Unter Feinden",
+                image: "511OL2GORpL._SL500_SY182_.jpg",
+                imdb: "http://www.imdb.com/title/tt0407887"
+            },
+            {
+                title: "Blow",
+                image: "512C08Cy5sL._SL500_SY182_.jpg",
+                imdb: "http://www.imdb.com/title/tt0221027"
+            }
+        ];
+        var movies = allMovies;
+
+        /* JS 2: Movie output */
+        function formatMovie(movie) {
+            var movieHTML = '';
+
+            //movieHTML += '<div>';
+
+            if (currentTitle == movie.title) {
+                movieHTML += '<div class="current" onclick="play(\'' + movie.title + '\');">';
+            } else {
+                movieHTML += '<div onclick="play(\'' + movie.title + '\');">';
+            }
+            movieHTML += '<img src="' + movie.image + '">';
+            movieHTML += '<h1>' + movie.title + '</h1>';
+            movieHTML += '<p><a href="' + movie.imdb + '">Details...</a></p>'
+            movieHTML += '</div>';
+            return movieHTML;
+            /* EXAMPLE:
+            <div>
+                <img src="511OL2GORpL._SL500_SY182_.jpg" width="128" height="182" />
+                <h1>Departed - Unter Feinden</h1>
+                <p><a href="http://www.imdb.com/title/tt0407887">Details...</a></p>
+            </div>
+            */
+        }
+
+        /* JS 4: All Movies output */
+        function printAllMovies() {
+            var moviesHTML = "";
+            for (movie in movies) {
+                moviesHTML += formatMovie(movies[movie]);
+            }
+            document.getElementById("albumlist").innerHTML = moviesHTML;
+        }
+
+        /* JS 5: Show different views */
+        function show(view) {
+            var views = document.getElementsByClassName("view");
+            for (var i = 0; i < views.length; i++) {
+                views[i].style.display = "none";
+            }
+            document.getElementById(view).style.display = "block";
+        }
+
+        /* JS 6: Toggle menu */
+        var menuVisible = false;
+
+        function toggleMenu() {
+            menuVisible = !menuVisible;
+
+            if (menuVisible) {
+                document.getElementById("menu").style.display = "block";
+                //document.getElementById("trigger").className = "open";
+            } else {
+                document.getElementById("menu").style.display = "none";
+                //document.getElementById("trigger").className = "";
+            }
+        }
+
+        /* JS 7: Show view on start */
+        window.onload = function () {
+            show("albumview");
+
+            //Rather do loading here
+            printAllMovies(movies);
+
+            //Register Event handler for 8
+            document.getElementById("filter").onkeyup = filterMovies;
+        }
+
+        /* JS 8: Filter */
+        function filterMovies() {
+            var filter = document.getElementById("filter").value.toLowerCase();
+            console.log("Filtering: " + filter);
+
+            if (filter == "") {
+                movies = allMovies;
+
+            } else {
+                movies = [];
+                for (movie in allMovies) {
+                    if (allMovies[movie].title.toLowerCase().indexOf(filter) > -1) {
+                        movies.push(allMovies[movie]);
+                    }
+                }
+            }
+
+            printAllMovies();
+
+        }
+
+        /* JS 9: Now playing */
+        var currentTitle = null;
+
+        function play(title) {
+            document.getElementById("now").innerHTML = title;
+            currentTitle = title;
+            printAllMovies();
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="menutrigger" onclick="toggleMenu();"><i class="fa fa-bars fa-2x"></i>
+    </div>
+    <nav id="menu">
+        <h1>Media</h1>
+        <ul>
+            <li onclick="show('playerview');">Player</li>
+            <li>My Music</li>
+            <li onclick="show('albumview');"><b>My Videos</b>
+            </li>
+            <li>Playlists</li>
+        </ul>
+    </nav>
+
+    <div id="controls">
+        <p id="now">Empty Playlist</p>
+        <i class="fa fa-2x fa-fast-backward"></i>
+        <i class="fa fa-2x fa-play"></i>
+        <i class="fa fa-2x fa-fast-forward"></i>
+    </div>
+
+    <div class="view" id="playerview">
+        Here would be the full version of the player
+    </div>
+
+    <div class="view" id="albumview">
+        <input type="text" placeholder="Search" id="filter">
+        <div id="albumlist"></div>
+        <script>
+            printAllMovies(movies);
+        </script>
+    </div>
+
+    <!--
+<footer>
+Sollte darunter...
+</footer>-->
+
+</body>
+
+</html>
