@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- 1. USE JQUERY UI -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <!-- 3. USE FONT-AWESOME -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- 4. SCRIPT -->
+    <script>
+        var playing = false;
+
+         // 11. timeupdate as explicit function
+        function timeupdateEvent() {
+            var time = $("#player").prop("currentTime");
+            $('#slider').slider('value', time);
+        }
+
+         // 6. DOCUMENT READY
+        $(function () {
+            // 5. REGISTER EVENT IN THE JQUERY STYLE
+            $('#play').on('click', function () {
+                if (!playing) {
+                    $('#player')[0].play();
+                } else {
+                    $('#player')[0].pause();
+                }
+                $('#play i').toggleClass('fa-pause');
+                $('#play i').toggleClass('fa-play');
+
+                playing = !playing;
+            });
+
+            // 8. WHEN METADATA LOADED
+            $('#player').on('durationchange', function () {
+                // 7. CREATE A SLIDER
+                //http://api.jqueryui.com/slider
+                $("#slider").slider({
+                    min: 0,
+                    max: $('#player').prop("duration"),
+                    step: 0.1,
+                    // 9. ADD SLIDER EVENT
+                    //While user slides:
+                    //http://api.jqueryui.com/slider/#event-slide
+                    slide: function (slide, ui) {
+                        //Get Value from slider
+                        var value = $("#slider").slider("value");
+                        //Set Video Position according to slider value
+                        $('#player').prop("currentTime", value);
+                    },
+                    // 11. DE- AND REREGISTER
+                    //When user starts sliding
+                    //http://api.jqueryui.com/slider/#event-start
+                    start: function (slide, ui) {
+                        //Remove event listener: timeupdate overwrites slider position otherwise
+                        $("#player").off("timeupdate");
+                    },
+                    //When user stops sliding
+                    //http://api.jqueryui.com/slider/#event-stop
+                    stop: function (slide, ui) {
+                        //Re-attach the event listener
+                        $("#player").on("timeupdate", timeupdateEvent);
+                    }
+                });
+            });
+
+            // 10. UPDATE DURING PLAYBACK
+            //Register Timeupdate Event
+            $("#player").on("timeupdate", timeupdateEvent);
+
+            // 12. PLAYBACK ENDED: REWIND
+            $("#player").on("ended", function () {
+                playing = false;
+                $('#play i').addClass('fa-play');
+                $('#play i').removeClass('fa-pause');
+                //Rewind
+                $('#player').prop("currentTime", 0);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <!-- 2. VIDEO PLAYER & MESSAGE BOX -->
+    <video id="player">
+        <source src="http://www.w3schools.com/tags/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <!-- 3. CONTROL BUTTONS -->
+    <div>
+        <button type="button" id="play">
+            <i class="fa fa-play"></i>
+        </button>
+    </div>
+
+    <!-- 5. SLIDER -->
+    <div id="slider"></div>
+    <script>
+        $('#player').on('loadedmetadata', function () {
+
+        });
+    </script>
+
+</body>
+
+</html>

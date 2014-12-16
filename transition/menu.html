@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 20%;
+            padding: 20px;
+            padding-top: 72px;
+            background: silver;
+            left: -20%;
+            z-index: 99;
+            transition: left 1s;
+        }
+        body.menuOpen nav {
+            left: 0;
+        }
+        #trigger {
+            position: fixed;
+            width: 64px;
+            height: 64px;
+            padding: 16px;
+            top: 4px;
+            left: 4px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        #trigger span,
+        #trigger span:before,
+        #trigger span:after {
+            position: absolute;
+            width: 32px;
+            height: 4px;
+            background: black;
+            border-radius: 2px;
+            box-shadow: 0px 0px 5px 2px silver;
+            font-size: 0;
+            content: '';
+            /*Add transition*/
+            transition: transform 1s, background-color 1s, box-shadow 1s;
+        }
+        #trigger span:before {
+            transform: translate3D(0, -250%, 0);
+        }
+        #trigger span:after {
+            transform: translate3D(0, 250%, 0);
+        }
+        body.menuOpen #trigger span {
+            /*Don't display central bar*/
+            background-color: transparent;
+            box-shadow: none;
+        }
+        body.menuOpen #trigger span:before {
+            /*Rotate top bar*/
+            transform: translate3D(0, 0, 0) rotate3D(0, 0, 1, 45deg);
+            box-shadow: none;
+        }
+        body.menuOpen #trigger span:after {
+            /*Rotate bottom bar*/
+            transform: translate3D(0, 0, 0) rotate3D(0, 0, 1, -45deg);
+            box-shadow: none;
+        }
+    </style>
+    <script>
+        var menuVisible = false;
+
+        function toggleMenu() {
+            $('body').toggleClass('menuOpen');
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="trigger" onclick="toggleMenu();"><span>Menu</span>
+    </div>
+    <nav id="menu">
+        <button>One</button>
+        <button>Two</button>
+    </nav>
+</body>
+
+</html>

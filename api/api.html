@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        youtube = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=parov%20stelar&type=video&videoEmbeddable=true&maxResults=50&key=AIzaSyBJIJgx9RT6J1o-Xd-roM0q7F4QXEzltns";
+        $.ajax({
+            url: youtube,
+            dataType: 'jsonp',
+            type: 'GET',
+            crossDomain: true,
+            success: function (data) {
+                for (item in data.items) {
+                    song = "<li>";
+                    song += "<img style='width:50px;height:50px;' src='" + data.items[item].snippet.thumbnails.default.url + "'/>";
+                    song += data.items[item].snippet.title;
+                    song += "</li>";
+                    $('#output').append(song);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <ul id="output"></ul>
+</body>
+
+</html>
