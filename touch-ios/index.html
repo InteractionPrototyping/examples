@@ -40,7 +40,7 @@
         $(function () {
             // Disable rubberband scroll for the document
             //$.registerScrolling();
-            $(document).on('touchmove', function (e) {
+            $('body').on('touchmove', function (e) {
                 e.preventDefault();
             });
         });
