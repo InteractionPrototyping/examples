@@ -6,7 +6,7 @@
         scrollXClass = 'scroll-x',
         searchTerms = '.' + scrollYClass + ', .' + scrollXClass;
 
-    $('body').on('touchstart', function (e) {
+    $(document).on('touchstart', function (e) {
         var $scroll = $(e.target).closest(searchTerms),
             targetTouch = e.originalEvent.targetTouches[0];
 
@@ -17,7 +17,7 @@
         } : {};
     });
 
-    $('body').on('touchmove', function (e) {
+    $(document).on('touchmove', function (e) {
         var $scroll = $(e.target).closest(searchTerms),
             targetTouch = e.originalEvent.targetTouches[0];
 
