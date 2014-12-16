@@ -12,7 +12,7 @@
     <!--hammer.js: Touch library 
         http://hammerjs.github.io/getting-started/
     -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.1.3/hammer.js"></script>
+    <script src="js/hammer.min.js"></script>
 
     <!--jQuery wrapper for hammer.js 
         https://github.com/hammerjs/jquery.hammer.js
@@ -25,15 +25,18 @@
     <script src="js/jquery.scrolling.js"></script>
 
     <style>
-        #scroll,
-        #swipe {
-            /* provoking scrolling */
-            position: absolute;
+        #scroll {
+            /* provoke scrolling */
             background-color: blue;
             width: 100%;
             height: 200px;
             overflow: hidden;
             overflow-y: scroll;
+        }
+        #swipe {
+            background-color: red;
+            width: 100%;
+            height: 200px;
         }
     </style>
     <script>
