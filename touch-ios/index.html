@@ -84,13 +84,22 @@
                 $('#swipe span').html('Swipe');
             }).on("doubletap", function (e) {
                 $('#swipe span').html('doubletap');
-            })
+            });
+
+            $('#button').on('touchstart mousedown', function (event) {
+                //this can be used instead of onclick, as this typically has a delay of >300ms on mobile devices
+                alert('instant click without delay');
+                //event needs to be stopped from propagation
+                event.preventDefault();
+                event.stopPropagation();
+            });
+
         });
     </script>
 </head>
 
 <body>
-    <button onclick="alert('works');">Click</button>
+    <button id="button">Click</button>
     <div id="scroll" class="scroll-y">
         <!-- add classes scroll-x or scroll-y to those events, where you want to handle them -->
         <h1>This is a scroll box</h1>
