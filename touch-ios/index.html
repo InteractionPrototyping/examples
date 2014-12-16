@@ -42,8 +42,6 @@
     <script>
         //Body listener
         $(function () {
-            // Disable rubberband scroll for the document
-            //$.registerScrolling();
 
             //Do event handling with hammer.js
             $('#swipe').hammer({
@@ -86,6 +84,7 @@
                 $('#swipe span').html('doubletap');
             });
 
+            //Express click handler
             $('#button').on('touchstart mousedown', function (event) {
                 //this can be used instead of onclick, as this typically has a delay of >300ms on mobile devices
                 alert('instant click without delay');
@@ -106,7 +105,7 @@
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </div>
     <div id="swipe">
-        <h1>This is a swipe box</h1>
+        <h1>This is a pan/swipe box</h1>
         <span></span>
     </div>
 </body>
