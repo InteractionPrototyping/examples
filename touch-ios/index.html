@@ -39,7 +39,10 @@
         //Body listener
         $(function () {
             // Disable rubberband scroll for the document
-            $.registerScrolling();
+            //$.registerScrolling();
+            $(document).on('touchmove', function (e) {
+                e.preventDefault();
+            });
         });
     </script>
 </head>
