@@ -41,6 +41,7 @@
             // Disable rubberband scroll for the document
             //$.registerScrolling();
             $('body').on('touchmove', function (e) {
+                e.stopPropagation();
                 e.preventDefault();
             });
         });
