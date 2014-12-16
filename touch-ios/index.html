@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <!--hammer.js: Touch library 
+        http://hammerjs.github.io/getting-started/
+    -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.1.3/hammer.js"></script>
+
+    <!--jQuery wrapper for hammer.js 
+        https://github.com/hammerjs/jquery.hammer.js
+    -->
+    <script src="js/jquery.hammer.js"></script>
+
+    <!--Deactivate rubberband scrolling
+        http://stackoverflow.com/questions/10357844/how-to-disable-rubber-band-in-ios-web-apps
+    -->
+    <script src="js/jquery.scrolling.js"></script>
+
+    <style>
+        #scroll {
+            /* provoking scrolling */
+            position: absolute;
+            background-color: blue;
+            width: 100%;
+            height: 50px;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+    <script>
+        //Body listener
+        $(function () {
+            // Disable rubberband scroll for the document
+            $.registerScrolling();
+        });
+    </script>
+</head>
+
+<body>
+    <button onclick="alert('works');">Click</button>
+    <div id="scroll" class="scroll-x">
+        <h1>This is a scroll box</h1>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </div>
+</body>
+
+</html>
